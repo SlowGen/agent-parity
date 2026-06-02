@@ -1,0 +1,12 @@
+---
+description: Dart/Flutter testing - test, flutter_test, integration_test, patrol, checks
+globs: "**/test/**/*.dart"
+alwaysApply: false
+---
+
+# Testing
+
+- Use `package:test` for unit tests, `package:flutter_test` for widget tests
+- Use `package:integration_test` for integration tests; use `package:patrol` when native UI automation is needed
+- Prefer `package:checks` for assertions over the default matchers
+- Implement error handling (try-catch, Either types, or global error handlers) and test both success and failure paths

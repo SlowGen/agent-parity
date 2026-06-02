@@ -1,0 +1,13 @@
+---
+description: Package versioning and workspace - latest versions, correct directory for pub
+globs: "**/pubspec.yaml"
+alwaysApply: false
+---
+
+# Workspace & Package Management
+
+- **Always use the latest possible version** when adding packages. Check pub.dev; use the newest version compatible with project constraints
+- In a Dart workspace monorepo: run `flutter pub get` from root for workspace deps; run `dart pub get` only inside server directories (e.g. `merchant_clowder_server/`)
+- Add dependencies only to the appropriate package directory (do not add at root)
+- Use `flutter pub add <package_name>` for regular deps, `flutter pub add dev:<package_name>` for dev deps
+- Document the reason when using an older version due to incompatibility

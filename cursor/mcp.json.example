@@ -1,0 +1,27 @@
+{
+  "mcpServers": {
+    "dart": {
+      "type": "stdio",
+      "command": "dart mcp-server --experimental-mcp-server --force-roots-fallback",
+      "env": {},
+      "args": []
+    },
+    "gcloud": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@google-cloud/gcloud-mcp"
+      ]
+    },
+    "serverpod": {
+      "command": "serverpod_mcp",
+      "args": [
+        "--gemini-api-key",
+        "YOUR_GEMINI_API_KEY_HERE"
+      ],
+      "rootDetection": {
+        "strategy": "workspace"
+      }
+    }
+  }
+}

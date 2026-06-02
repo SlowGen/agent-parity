@@ -1,0 +1,15 @@
+---
+description: Flutter widget and build patterns - const, ListView.builder, no heavy work in build
+globs: "**/*.dart"
+alwaysApply: false
+---
+
+# Flutter Patterns
+
+- Widgets (especially `StatelessWidget`) are immutable; Flutter rebuilds the widget tree when UI must change
+- Prefer composing smaller widgets over extending existing ones. Use small `Widget` classes instead of private helper methods that return a `Widget`
+- Break down large `build()` methods into smaller, reusable Widget classes
+- Use `ListView.builder` for lazy-loaded lists. Use `const` constructors in widgets and in `build()` whenever possible
+- Avoid expensive operations (network calls, complex computation) inside `build()` methods
+- Favor isolated widget files over private _build widgets; user prefers isolated widgets in their own files with pages calling those widgets
+- Aim for separation of concerns (MVC/MVVM). For shared/complex state use `ChangeNotifier`; for robust structure use MVVM with Repositories/Services for data sources

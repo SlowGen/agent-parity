@@ -1,0 +1,12 @@
+---
+description: JavaScript interop - dart:js_interop only; no package:js or dart:html
+globs: "**/*.dart"
+alwaysApply: false
+---
+
+# JavaScript Interop
+
+- **Do not use**: `package:js`, `package:js_util`, or `dart:html` (deprecated)
+- **Use**: `dart:js_interop` and related packages for all JavaScript interoperability
+- For conditional imports detecting web: use `dart.library.js_interop` (not `dart.library.html`)
+- When the user gives guidance on js_interop, treat it as correct and follow it precisely

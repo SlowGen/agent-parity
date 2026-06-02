@@ -1,0 +1,15 @@
+---
+description: Dart coding standards - Effective Dart, lint, async, switch, docs
+globs: "**/*.dart"
+alwaysApply: false
+---
+
+# Dart Standards
+
+- Follow the official Effective Dart guidelines
+- Add documentation comments to all public APIs (classes, constructors, methods, top-level functions)
+- **Lint warnings must be fixed** - code analysis will not pass with lint warnings. Never dismiss them as "just style suggestions"
+- **Trailing newline**: Files must have exactly one new line at the end. "Missing new line" can incorrectly trigger if there are zero or more than one new lines
+- Use `async`/`await` with robust error handling. Use pattern matching where it simplifies code
+- **Switch (Dart 3)**: `switch` does not fall through. Do not use `break` in switch cases unless needed for early exit
+- **JavaScript interop**: Use `dart:js_interop` only. Do not use `package:js`, `package:js_util`, or `dart:html`. For conditional web imports use `dart.library.js_interop` (not `dart.library.html`)

@@ -1,0 +1,13 @@
+---
+description: Flutter theming and assets - ThemeData, ColorScheme.fromSeed, Image.network builders
+globs: "**/*.dart"
+alwaysApply: false
+---
+
+# Theming & Assets
+
+- Use a centralized `ThemeData` and support light/dark/system via `ThemeMode`. Use `ColorScheme.fromSeed` for palettes
+- Use `google_fonts` and a defined `TextTheme` for consistent fonts. Customize `appBarTheme`, `elevatedButtonTheme`, etc.
+- Declare asset paths in `pubspec.yaml`. Use `Image.asset` for local assets
+- For `Image.network`, always provide `loadingBuilder` and `errorBuilder` for better UX
+- Prefer vibrant palettes and clear typography hierarchy (hero text, section headlines, list headlines)

@@ -1,0 +1,15 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+*~
+
+# Secrets — never commit real MCP config
+cursor/mcp.json
+**/mcp.json
+!cursor/mcp.json.example
+
+# Local apply logs (if added later)
+*.log
