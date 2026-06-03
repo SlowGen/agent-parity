@@ -72,6 +72,8 @@ Run ecosystem steps alone:
 
 To add a new ecosystem package, edit `cursor/ecosystem-skills.json` and commit. Use `npx skills find` to discover packages on [skills.sh](https://skills.sh/).
 
+Scripts are written for **macOS `/bin/bash` 3.2** (no empty-array expansion under `set -u`). If you use Homebrew bash, either works.
+
 Current packages:
 
 | Source | Skills |

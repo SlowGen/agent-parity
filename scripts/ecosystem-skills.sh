@@ -103,18 +103,18 @@ install_packages() {
     [[ "$kind" == "PKG" ]] || continue
     had_pkg=true
 
-    local cmd=(npx skills add "$source" -g -a cursor -y)
-    if [[ "$skill" == "*" ]]; then
-      cmd+=(--skill '*')
-    else
-      cmd+=(-s "$skill")
-    fi
-
     if [[ "$DRY_RUN" == true ]]; then
-      echo "==> Would install: ${cmd[*]}"
+      if [[ "$skill" == "*" ]]; then
+        echo "==> Would install: npx skills add $source -g -a cursor -y --skill '*'"
+      else
+        echo "==> Would install: npx skills add $source -g -a cursor -y -s $skill"
+      fi
+    elif [[ "$skill" == "*" ]]; then
+      echo "==> Installing ecosystem skills: $source (${skill})"
+      npx skills add "$source" -g -a cursor -y --skill '*'
     else
       echo "==> Installing ecosystem skills: $source (${skill})"
-      "${cmd[@]}"
+      npx skills add "$source" -g -a cursor -y -s "$skill"
     fi
   done < <(read_manifest)
 
@@ -170,15 +170,19 @@ link_to_cursor_skills() {
     linked=$((linked + 1))
   }
 
-  for prefix in "${prefixes[@]}"; do
+  # Bash 3.2 + set -u: do not expand "${array[@]}" when the array is empty.
+  if [[ ${#prefixes[@]} -gt 0 ]]; then
     shopt -s nullglob
-    for skill_dir in "${agents_skills}/${prefix}"*; do
-      [[ -d "$skill_dir" ]] || continue
-      link_skill "$skill_dir"
+    for prefix in "${prefixes[@]}"; do
+      for skill_dir in "${agents_skills}/${prefix}"*; do
+        [[ -d "$skill_dir" ]] || continue
+        link_skill "$skill_dir"
+      done
     done
     shopt -u nullglob
-  done
+  fi
 
+  if [[ ${#names[@]} -gt 0 ]]; then
   for name in "${names[@]}"; do
     local skill_dir="${agents_skills}/${name}"
     if [[ -d "$skill_dir" ]]; then
@@ -189,6 +193,7 @@ link_to_cursor_skills() {
       echo "Skip link $name: not installed at $skill_dir"
     fi
   done
+  fi
 
   if [[ "$linked" -eq 0 && "$DRY_RUN" == false ]]; then
     echo "No ecosystem skills linked (install packages first or check manifest)"

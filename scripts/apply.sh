@@ -102,11 +102,12 @@ if [[ -n "$AGENTS" ]]; then
 fi
 
 if [[ "$SKIP_ECOSYSTEM" == false ]]; then
-  ECOSYSTEM_ARGS=()
+  # Bash 3.2 (macOS /bin/bash) + set -u: expanding an empty array is an error.
   if [[ "$DRY_RUN" == true ]]; then
-    ECOSYSTEM_ARGS+=(--dry-run)
+    "${REPO_ROOT}/scripts/ecosystem-skills.sh" --dry-run
+  else
+    "${REPO_ROOT}/scripts/ecosystem-skills.sh"
   fi
-  "${REPO_ROOT}/scripts/ecosystem-skills.sh" "${ECOSYSTEM_ARGS[@]}"
 fi
 
 if [[ "$DRY_RUN" == true ]]; then
