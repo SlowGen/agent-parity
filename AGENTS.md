@@ -10,6 +10,7 @@ After you apply this repo on a machine, `~/.cursor/skills/` and `~/.cursor/rules
 |---------|------------------------|
 | `cursor/skills/` | `~/.cursor/skills/` |
 | `cursor/rules/*.mdc` | `~/.cursor/rules/` |
+| `cursor/ecosystem-skills.json` | Installed via `npx skills` → `~/.agents/skills/`, then symlinked to `~/.cursor/skills/` |
 | `cursor/mcp.json.example` | Merged manually into `~/.cursor/mcp.json` |
 | This file (`AGENTS.md`) | Instructions for humans and agents |
 
@@ -23,6 +24,8 @@ After you apply this repo on a machine, `~/.cursor/skills/` and `~/.cursor/rules
 | Cursor **User Rules** (Settings) | Not stored on the filesystem; re-enter manually if needed |
 
 **Rule for new personal skills:** always create them under `~/.cursor/skills/<name>/SKILL.md`, never under `~/.cursor/skills-cursor/`.
+
+**Ecosystem skills** (official Flutter/Dart packages from GitHub) are listed in `cursor/ecosystem-skills.json` and installed by `./scripts/apply.sh` via the [skills CLI](https://skills.sh/). They live in `~/.agents/skills/` and are symlinked into `~/.cursor/skills/` so Cursor discovers them on both paths. Do not copy ecosystem skill content into `cursor/skills/` — update the manifest instead.
 
 ## Quick apply
 
@@ -44,7 +47,38 @@ Optional: mirror skills to other agents (only if you use them):
 ./scripts/apply.sh --agents claude,copilot
 ```
 
+Skip ecosystem skill install/link (repo skills and rules only):
+
+```bash
+./scripts/apply.sh --skip-ecosystem
+```
+
 Restart Cursor after applying, then open **Settings → Rules** to confirm skills and rules appear.
+
+## Ecosystem skills
+
+Official Flutter, Dart, and helper skills are declared in `cursor/ecosystem-skills.json`. `./scripts/apply.sh` runs `./scripts/ecosystem-skills.sh`, which:
+
+1. Installs packages with `npx skills add … -g -a cursor` (requires Node.js / `npx`)
+2. Symlinks installed skills from `~/.agents/skills/` into `~/.cursor/skills/`
+
+Run ecosystem steps alone:
+
+```bash
+./scripts/ecosystem-skills.sh              # install + link
+./scripts/ecosystem-skills.sh --dry-run    # preview only
+./scripts/ecosystem-skills.sh --skip-install   # link only (after manual install)
+```
+
+To add a new ecosystem package, edit `cursor/ecosystem-skills.json` and commit. Use `npx skills find` to discover packages on [skills.sh](https://skills.sh/).
+
+Current packages:
+
+| Source | Skills |
+|--------|--------|
+| `flutter/skills` | All Flutter skills (`flutter-*`) |
+| `dart-lang/skills` | All Dart skills (`dart-*`) |
+| `vercel-labs/skills` | `find-skills` |
 
 ## Apply on a new machine (e.g. Mac)
 
@@ -125,6 +159,7 @@ Cursor also discovers skills from compatibility paths. This repo stores skills o
 ## Verification checklist
 
 - [ ] `ls ~/.cursor/skills` lists each folder under `cursor/skills/`
+- [ ] `ls ~/.cursor/skills` includes `flutter-*` and `dart-*` symlinks (after ecosystem apply)
 - [ ] `ls ~/.cursor/rules` lists each `.mdc` under `cursor/rules/`
 - [ ] Cursor **Settings → Rules** shows global rules and skills
 - [ ] A prompt that should trigger a skill (e.g. code review) loads the expected skill
@@ -150,12 +185,14 @@ agent-parity/
 ├── AGENTS.md              # This playbook
 ├── README.md
 ├── cursor/
-│   ├── skills/            # Personal global skills
+│   ├── skills/            # Personal global skills (repo-owned)
 │   ├── rules/             # Global .mdc rules
+│   ├── ecosystem-skills.json  # Flutter/Dart/etc. via skills CLI
 │   └── mcp.json.example
 ├── docs/
 │   ├── setup-macos.md
 │   └── setup-linux.md
 └── scripts/
-    └── apply.sh
+    ├── apply.sh
+    └── ecosystem-skills.sh
 ```

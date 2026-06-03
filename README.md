@@ -16,10 +16,13 @@ Restart Cursor and check **Settings → Rules**.
 
 ## What is synced
 
-- `cursor/skills/` → `~/.cursor/skills/`
+- `cursor/skills/` → `~/.cursor/skills/` (personal skills you own in this repo)
 - `cursor/rules/` → `~/.cursor/rules/`
+- `cursor/ecosystem-skills.json` → Flutter/Dart skills via `npx skills`, symlinked into `~/.cursor/skills/`
 
 Cursor-managed `~/.cursor/skills-cursor/` is intentionally **not** in this repo.
+
+Requires **Node.js** (`npx`) for ecosystem skill install. Use `./scripts/apply.sh --skip-ecosystem` if you only want repo skills and rules.
 
 ## Updating
 

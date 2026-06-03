@@ -5,6 +5,7 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DRY_RUN=false
 AGENTS=""
+SKIP_ECOSYSTEM=false
 
 usage() {
   cat <<EOF
@@ -16,6 +17,7 @@ Options:
   --dry-run           Show what rsync would do without changing files
   --agents LIST       Also mirror skills to comma-separated agent dirs
                       (claude, copilot, agents). Example: --agents claude,copilot
+  --skip-ecosystem    Skip skills CLI install and ~/.cursor/skills symlinks
   -h, --help          Show this help
 
 See AGENTS.md for full documentation.
@@ -31,6 +33,10 @@ while [[ $# -gt 0 ]]; do
     --agents)
       AGENTS="${2:-}"
       shift 2
+      ;;
+    --skip-ecosystem)
+      SKIP_ECOSYSTEM=true
+      shift
       ;;
     -h | --help)
       usage
@@ -93,6 +99,14 @@ if [[ -n "$AGENTS" ]]; then
         ;;
     esac
   done
+fi
+
+if [[ "$SKIP_ECOSYSTEM" == false ]]; then
+  ECOSYSTEM_ARGS=()
+  if [[ "$DRY_RUN" == true ]]; then
+    ECOSYSTEM_ARGS+=(--dry-run)
+  fi
+  "${REPO_ROOT}/scripts/ecosystem-skills.sh" "${ECOSYSTEM_ARGS[@]}"
 fi
 
 if [[ "$DRY_RUN" == true ]]; then

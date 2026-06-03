@@ -10,7 +10,13 @@ git pull
 ./scripts/apply.sh
 ```
 
-This updates `~/.cursor/skills/` and `~/.cursor/rules/` to match the repo.
+This updates `~/.cursor/skills/` and `~/.cursor/rules/` to match the repo, then installs and links ecosystem skills (Flutter, Dart) from `cursor/ecosystem-skills.json`.
+
+Repo-owned skills only (skip ecosystem install):
+
+```bash
+./scripts/apply.sh --skip-ecosystem
+```
 
 ## Capture local changes into the repo
 

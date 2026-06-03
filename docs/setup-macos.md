@@ -20,9 +20,11 @@ Use this when bringing a **new or empty** Mac up to match the Linux configuratio
 2. **Apply skills and rules**
 
    ```bash
-   chmod +x scripts/apply.sh
+   chmod +x scripts/apply.sh scripts/ecosystem-skills.sh
    ./scripts/apply.sh
    ```
+
+   This copies repo skills/rules and installs Flutter/Dart ecosystem skills (needs `npx` / Node.js). Use `./scripts/apply.sh --skip-ecosystem` if you only want repo-owned skills.
 
 3. **Sign in to Cursor**
 
